@@ -185,7 +185,6 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
 {
     $templatePath = realpath(dirname(__FILE__) . "/templates");
     if ($formName == 'CRM_Profile_Form_Edit') {
-        Civi::resources()->addScriptFile('com.octopus8.o8esignature', 'dist/main.js');
         $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
         $form->assign('contactid', $contact_id);
         $cont = new CRM_Contact_BAO_Contact();
@@ -207,40 +206,62 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         $field = "e-Signature-DATA";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
         $fieldNAME = "custom_" . $fieldID;
+        if ($form->elementExists($fieldNAME)) {
+            $form->assign('customfield', $fieldNAME);
+        }else{
+            return;
+        }
         $esval = _o8esignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
         $form->assign('signature_val', $esval);
+        Civi::resources()->addScriptFile('com.octopus8.o8esignature', 'dist/main.js');
         $form->assign('signature_pad', 'edit');
-        $form->assign('customfield', $fieldNAME);
         $form->assign('contactid', $contact_id);
         $form->assign('contact', $contact);
         //JPG DATA FIELD
         $field = "e-Signature-JPG";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
         $fieldNAME = "custom_" . $fieldID;
-        $form->assign('customfieldjpg', $fieldNAME);
+        if ($form->elementExists($fieldNAME)) {
+            $form->assign('customfieldjpg', $fieldNAME);
+        }else{
+            return;
+        }
         $field = "e-Signature-JPG-64";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
         $fieldNAME = "custom_" . $fieldID;
-        $form->assign('customfieldjpgbase', $fieldNAME);
+        if ($form->elementExists($fieldNAME)) {
+            $form->assign('customfieldjpgbase', $fieldNAME);
+        }else{
+            return;
+        }
 //        $form->addElement('textarea', 'tcustomfieldjpg', $fieldNAME);
         //PNG DATA FIELD
         $field = "e-Signature-PNG";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
         $fieldNAME = "custom_" . $fieldID;
-        $form->assign('customfieldpng', $fieldNAME);
+        if ($form->elementExists($fieldNAME)) {
+            $form->assign('customfieldpng', $fieldNAME);
+        }else{
+            return;
+        }
         $field = "e-Signature-PNG-64";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
         $fieldNAME = "custom_" . $fieldID;
-        $form->assign('customfieldpngbase', $fieldNAME);
+        if ($form->elementExists($fieldNAME)) {
+            $form->assign('customfieldpngbase', $fieldNAME);
+        }else{
+            return;
+        }
 //        $form->addElement('textarea', 'tcustomfieldpng', $fieldNAME);
         CRM_Core_Region::instance('page-body')->add(array(
             'template' => "{$templatePath}/hidedebug.tpl",
         ));
-        CRM_Core_Region::instance('page-body')->add(array(
-            'template' => "{$templatePath}/justdebug.tpl",
-        ));
+//        CRM_Core_Region::instance('page-body')->add(array(
+//            'template' => "{$templatePath}/justdebug.tpl",
+//        ));
 
     }
+
 }
 
 //function electronicsignature_civicrm_idsException(&$skip){
@@ -273,9 +294,21 @@ function electronicsignature_civicrm_postProcess($formName, $form)
 //            return;
 //        }
         $customfieldjpg = $form->get_template_vars('customfieldjpg');
+        if(!$customfieldjpg){
+            return;
+        }
         $customfieldpng = $form->get_template_vars('customfieldpng');
+        if(!$customfieldpng){
+            return;
+        }
         $customfieldjpgbase = $form->get_template_vars('customfieldjpgbase');
+        if(!$customfieldjpgbase){
+            return;
+        }
         $customfieldpngbase = $form->get_template_vars('customfieldpngbase');
+        if(!$customfieldpngbase){
+            return;
+        }
         $datajpg = $values[$customfieldjpgbase];
         $datapng = $values[$customfieldpngbase];
         $a = [
