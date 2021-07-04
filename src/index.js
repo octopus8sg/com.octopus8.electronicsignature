@@ -58,9 +58,11 @@ CRM.$(function ($) {
             console.log(e.message);
         }
         if ('true' === c0.attr('data-disabled')) {
-            s1.off()
+            s1.off();
+            s1.innerHTML = "";
+            s.hide()
+            s.html("");
         }
-        ;
 
     });
 
