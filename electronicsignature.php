@@ -212,6 +212,7 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfield', $fieldNAME);
         }else{
+            $form->assign('customfield', $fieldNAME);
             Civi::log()->info('customfield: ' . $fieldNAME);
 //            return;
         }
@@ -228,6 +229,7 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldjpg', $fieldNAME);
         }else{
+            $form->assign('customfieldjpg', $fieldNAME);
             Civi::log()->info('customfieldjpg: ' . $fieldNAME);
 //            return;
         }
@@ -237,6 +239,7 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldjpgbase', $fieldNAME);
         }else{
+            $form->assign('customfieldjpgbase', $fieldNAME);
             Civi::log()->info('customfieldjpgbase: ' . $fieldNAME);
 //            return;
         }
@@ -248,6 +251,7 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldpng', $fieldNAME);
         }else{
+            $form->assign('customfieldpng', $fieldNAME);
             Civi::log()->info('customfieldpng: ' . $fieldNAME);
 //            return;
         }
@@ -257,6 +261,7 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldpngbase', $fieldNAME);
         }else{
+            $form->assign('customfieldpngbase', $fieldNAME);
             Civi::log()->info('customfieldpngbase: ' . $fieldNAME);
 //            return;
         }
