@@ -184,6 +184,9 @@ function electronicsignature_civicrm_apiWrappers(&$wrappers, $apiRequest)
 function electronicsignature_civicrm_preProcess($formName, &$form)
 {
     $templatePath = realpath(dirname(__FILE__) . "/templates");
+    CRM_Core_Region::instance('page-body')->add(array(
+        'template' => "{$templatePath}/justdebug.tpl",
+    ));
     if ($formName == 'CRM_Profile_Form_Edit') {
         $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
         $form->assign('contactid', $contact_id);
@@ -209,7 +212,8 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfield', $fieldNAME);
         }else{
-            return;
+            Civi::log()->info('customfield: ' . $fieldNAME);
+//            return;
         }
         $esval = _o8esignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
         $form->assign('signature_val', $esval);
@@ -224,7 +228,8 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldjpg', $fieldNAME);
         }else{
-            return;
+            Civi::log()->info('customfieldjpg: ' . $fieldNAME);
+//            return;
         }
         $field = "e-Signature-JPG-64";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
@@ -232,7 +237,8 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldjpgbase', $fieldNAME);
         }else{
-            return;
+            Civi::log()->info('customfieldjpgbase: ' . $fieldNAME);
+//            return;
         }
 //        $form->addElement('textarea', 'tcustomfieldjpg', $fieldNAME);
         //PNG DATA FIELD
@@ -242,7 +248,8 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldpng', $fieldNAME);
         }else{
-            return;
+            Civi::log()->info('customfieldpng: ' . $fieldNAME);
+//            return;
         }
         $field = "e-Signature-PNG-64";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
@@ -250,15 +257,13 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         if ($form->elementExists($fieldNAME)) {
             $form->assign('customfieldpngbase', $fieldNAME);
         }else{
-            return;
+            Civi::log()->info('customfieldpngbase: ' . $fieldNAME);
+//            return;
         }
 //        $form->addElement('textarea', 'tcustomfieldpng', $fieldNAME);
         CRM_Core_Region::instance('page-body')->add(array(
             'template' => "{$templatePath}/hidedebug.tpl",
         ));
-//        CRM_Core_Region::instance('page-body')->add(array(
-//            'template' => "{$templatePath}/justdebug.tpl",
-//        ));
 
     }
 
