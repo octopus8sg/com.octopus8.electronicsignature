@@ -181,15 +181,18 @@ function electronicsignature_civicrm_apiWrappers(&$wrappers, $apiRequest)
     }
 }
 
-function electronicsignature_civicrm_preProcess($formName, &$form)
+function electronicsignature_civicrm_buildForm($formName, &$form)
 {
     $templatePath = realpath(dirname(__FILE__) . "/templates");
-    CRM_Core_Region::instance('page-body')->add(array(
-        'template' => "{$templatePath}/justdebug.tpl",
-    ));
+//    CRM_Core_Region::instance('page-body')->add(array(
+//        'template' => "{$templatePath}/justdebug.tpl",
+//    ));
     if ($formName == 'CRM_Profile_Form_Edit') {
         $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
         $form->assign('contactid', $contact_id);
+//        $arform = $form->getElements();
+//        $arformstring = print_r($arform, TRUE);
+//        Civi::log()->info('form: ' . $arformstring);
         $cont = new CRM_Contact_BAO_Contact();
         $cont->id = $contact_id;
         if (!$cont->find(TRUE)) {
