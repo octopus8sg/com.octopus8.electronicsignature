@@ -6,6 +6,7 @@ import css from "./style.css"
 CRM.$(function ($) {
     let c1 = $('#signature-pad-1').get(0);
     let c0 = $('#signature-pad-1');
+    let s = $('#signaturepad');
     //canvas
     let s1 = new SignaturePad(c1, {
         // Necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
@@ -18,6 +19,9 @@ CRM.$(function ($) {
     let contactid = 0;
     let customfieldjpgbase = "";
     let customfieldpngbase = "";
+    let customfieldjpgbaserow = "";
+    let customfieldjpgbaseeditrow = "";
+
     $(document).ready(function () {
 
         sigstr = $("#signature").text();
@@ -29,11 +33,21 @@ CRM.$(function ($) {
         customfieldpng = $("#customfieldpng").text();
         customfieldjpgbase = $("#customfieldjpgbase").text();
         customfieldpngbase = $("#customfieldpngbase").text();
-        $("#row-" + customfieldjpgbase).hide();
+        customfieldjpgbaserow = $("#row-" + customfieldjpgbase);
+        customfieldjpgbaseeditrow = $("#editrow-" + customfieldjpgbase);
+        if(customfieldjpgbaserow.length > 0){
+            s.insertAfter(customfieldjpgbaserow);
+        }
+        customfieldjpgbaserow.hide();
         $("#row-" + customfieldpngbase).hide();
         $("#row-" + customfield).hide();
-        $("#editrow-" + customfieldjpgbase).hide();
+        if(customfieldjpgbaseeditrow.length){
+            s.insertAfter(customfieldjpgbaseeditrow);
+        }
+        customfieldjpgbaseeditrow.hide();
         $("#editrow-" + customfieldpngbase).hide();
+        $("#editrow-" + customfieldpng).hide();
+        $("#editrow-" + customfieldjpg).hide();
         $("#editrow-" + customfield).hide();
         //custom field id for saving
         try{

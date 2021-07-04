@@ -183,8 +183,9 @@ function electronicsignature_civicrm_apiWrappers(&$wrappers, $apiRequest)
 
 function electronicsignature_civicrm_preProcess($formName, &$form)
 {
+    $templatePath = realpath(dirname(__FILE__) . "/templates");
     if ($formName == 'CRM_Profile_Form_Edit') {
-        Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'dist/main.js');
+        Civi::resources()->addScriptFile('com.octopus8.o8esignature', 'dist/main.js');
         $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
         $form->assign('contactid', $contact_id);
         $cont = new CRM_Contact_BAO_Contact();
@@ -194,13 +195,19 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         } else {
             $contact = $cont->toArray();
         }
+//        if($contact_id != $contact['id']){
+//            CRM_Core_Region::instance('page-body')->add(array(
+//                'template' => "{$templatePath}/justdebug.tpl",
+//            ));
+//            return;
+//        }
         require_once 'CRM/Core/BAO/CustomField.php';
         $group = "e-Signature";
         //MAIN DATA FIELD
         $field = "e-Signature-DATA";
         $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
         $fieldNAME = "custom_" . $fieldID;
-        $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
+        $esval = _o8esignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
         $form->assign('signature_val', $esval);
         $form->assign('signature_pad', 'edit');
         $form->assign('customfield', $fieldNAME);
@@ -226,13 +233,12 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
         $fieldNAME = "custom_" . $fieldID;
         $form->assign('customfieldpngbase', $fieldNAME);
 //        $form->addElement('textarea', 'tcustomfieldpng', $fieldNAME);
-        $templatePath = realpath(dirname(__FILE__) . "/templates");
         CRM_Core_Region::instance('page-body')->add(array(
             'template' => "{$templatePath}/hidedebug.tpl",
         ));
-//        CRM_Core_Region::instance('page-body')->add(array(
-//            'template' => "{$templatePath}/justdebug.tpl",
-//        ));
+        CRM_Core_Region::instance('page-body')->add(array(
+            'template' => "{$templatePath}/justdebug.tpl",
+        ));
 
     }
 }
@@ -246,16 +252,30 @@ function electronicsignature_civicrm_preProcess($formName, &$form)
 //}
 function electronicsignature_civicrm_postProcess($formName, $form)
 {
-
     if ($formName == 'CRM_Profile_Form_Edit') {
+        $values = $form->exportValues();
+        $myVariable = print_r($values, TRUE);
+        $contactid = $form->getVar( '_id' );
+        Civi::log()->info($myVariable);
+        //Get what the form sended
+        //Find new client id by primary email
+//        $result = civicrm_api3('Email', 'get', [
+//            'sequential' => 1,
+//            'email' => $myVariable['email-Primary'],
+//            'is_primary' => 1,
+//        ]);
+//        $myContact = print_r($result, TRUE);
+//        Civi::log()->info('$myContact');
+//        Civi::log()->info($myContact);
+//        if($result['count'] == 1){
+//            $contactid = $result['values']['contact_id'];
+//        }else{
+//            return;
+//        }
         $customfieldjpg = $form->get_template_vars('customfieldjpg');
         $customfieldpng = $form->get_template_vars('customfieldpng');
         $customfieldjpgbase = $form->get_template_vars('customfieldjpgbase');
         $customfieldpngbase = $form->get_template_vars('customfieldpngbase');
-        $contactid = $form->get_template_vars('contactid');
-        $values = $form->exportValues();
-        $myVariable = print_r($values, TRUE);
-
         $datajpg = $values[$customfieldjpgbase];
         $datapng = $values[$customfieldpngbase];
         $a = [
@@ -266,9 +286,7 @@ function electronicsignature_civicrm_postProcess($formName, $form)
             'content' => $datapng,
         ];
         CRM_Core_Error::debug_var('name', $a);
-        Civi::log()->info($datajpg);
         $result = civicrm_api3('Attachment', 'create', $a);
-        Civi::log()->info($result);
         $b = [
             'name' => "signature.jpg",
             'mime_type' => "image/jpg",
@@ -276,10 +294,7 @@ function electronicsignature_civicrm_postProcess($formName, $form)
             'field_name' => $customfieldjpg,
             'content' => $datajpg,
         ];
-        Civi::log()->info($b);
         $result = civicrm_api3('Attachment', 'create', $b);
-        Civi::log()->info($result);
-
     }
 }
 

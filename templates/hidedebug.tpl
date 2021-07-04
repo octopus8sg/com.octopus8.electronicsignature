@@ -1,5 +1,5 @@
 <div id="signaturepad">
-    <h4>Signature of {$contact.display_name}</h4>
+    <h4>Signature Pad</h4>
     {if $signature_pad != 'edit'}
         <div class="wrapper-1">
             <canvas id="signature-pad-1" class="signature-pad" data-disabled="true"></canvas>
