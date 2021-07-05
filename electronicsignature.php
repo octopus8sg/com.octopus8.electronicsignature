@@ -183,7 +183,7 @@ function electronicsignature_civicrm_apiWrappers(&$wrappers, $apiRequest)
 
 function electronicsignature_civicrm_buildForm($formName, &$form)
 {
-//    $templatePath = realpath(dirname(__FILE__) . "/templates");
+    $templatePath = realpath(dirname(__FILE__) . "/templates");
 //    CRM_Core_Region::instance('page-body')->add(array(
 //        'template' => "{$templatePath}/justdebug.tpl",
 //    ));
