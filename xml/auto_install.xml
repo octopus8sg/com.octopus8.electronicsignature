@@ -3,16 +3,16 @@
 <CustomData>
   <CustomGroups>
     <CustomGroup>
-      <name>constituent_information</name>
+      <name>e_Signature</name>
       <title>e-Signature</title>
-      <extends>Individual</extends>
+      <extends>Contact</extends>
       <style>Tab</style>
       <collapse_display>0</collapse_display>
       <help_pre>&lt;p&gt;Please enter e-Signature as data becomes available for this contact.&lt;/p&gt;</help_pre>
       <help_post></help_post>
       <weight>1</weight>
       <is_active>1</is_active>
-      <table_name>civicrm_value_constituent_information_1</table_name>
+      <table_name>civicrm_value_e_signature_1</table_name>
       <is_multiple>0</is_multiple>
       <collapse_adv_display>0</collapse_adv_display>
       <is_reserved>0</is_reserved>
@@ -35,7 +35,7 @@
       <column_name>e_signature_data_15</column_name>
       <serialize>0</serialize>
       <in_selector>0</in_selector>
-      <custom_group_name>constituent_information</custom_group_name>
+      <custom_group_name>e_Signature</custom_group_name>
     </CustomField>
     <CustomField>
       <name>e_Signature_JPG</name>
@@ -52,7 +52,7 @@
       <column_name>e_signature_jpg_17</column_name>
       <serialize>0</serialize>
       <in_selector>0</in_selector>
-      <custom_group_name>constituent_information</custom_group_name>
+      <custom_group_name>e_Signature</custom_group_name>
     </CustomField>
     <CustomField>
       <name>e_Signature_PNG</name>
@@ -69,7 +69,7 @@
       <column_name>e_signature_png_18</column_name>
       <serialize>0</serialize>
       <in_selector>0</in_selector>
-      <custom_group_name>constituent_information</custom_group_name>
+      <custom_group_name>e_Signature</custom_group_name>
     </CustomField>
     <CustomField>
       <name>e_Signature_PNG_64</name>
@@ -85,7 +85,7 @@
       <column_name>e_signature_png_64_19</column_name>
       <serialize>0</serialize>
       <in_selector>0</in_selector>
-      <custom_group_name>constituent_information</custom_group_name>
+      <custom_group_name>e_Signature</custom_group_name>
     </CustomField>
     <CustomField>
       <name>e_Signature_JPG_64</name>
@@ -101,7 +101,7 @@
       <column_name>e_signature_jpg_64_21</column_name>
       <serialize>0</serialize>
       <in_selector>0</in_selector>
-      <custom_group_name>constituent_information</custom_group_name>
+      <custom_group_name>e_Signature</custom_group_name>
     </CustomField>
   </CustomFields>
 </CustomData>

@@ -15,6 +15,29 @@ The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 Learn more about installing CiviCRM extensions in the [CiviCRM Sysadmin Guide](https://docs.civicrm.org/sysadmin/en/latest/customize/extensions/).
 
+## Getting Started
+
+### Before installation be sure to delete 
+
+* "e-Signature" custom field group and 
+* "e-Signature-DATA", 
+* "e-Signature-JPG", 
+* "e-Signature-JPG-64", 
+* "e-Signature-PNG", 
+* "e-Signature-PNG-64" custom field types
+
+### After creating Profile don't forget to add
+* "e-Signature-DATA :: e-Signature", 
+* "e-Signature-JPG :: e-Signature", 
+* "e-Signature-JPG-64 :: e-Signature", 
+* "e-Signature-PNG :: e-Signature", 
+* "e-Signature-PNG-64 :: e-Signature", 
+
+and
+* e-mail (primary)
+* nickname of first/last name
+fields to Profile
+
 ## Installation (CLI, Zip)
 
 Sysadmins and developers may download the `.zip` file for this extension and
@@ -35,10 +58,6 @@ git clone https://github.com/FIXME/com.octopus8.electronicsignature.git
 cv en electronicsignature
 ```
 
-## Getting Started
-
-(* FIXME: Where would a new user navigate to get started? What changes would they see? *)
-
 ## Known Issues
 
-(* FIXME *)
+This version will not remove e-Signature fields if they are not complitely present

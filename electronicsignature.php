@@ -183,7 +183,7 @@ function electronicsignature_civicrm_apiWrappers(&$wrappers, $apiRequest)
 
 function electronicsignature_civicrm_buildForm($formName, &$form)
 {
-    $templatePath = realpath(dirname(__FILE__) . "/templates");
+//    $templatePath = realpath(dirname(__FILE__) . "/templates");
 //    CRM_Core_Region::instance('page-body')->add(array(
 //        'template' => "{$templatePath}/justdebug.tpl",
 //    ));
@@ -216,7 +216,7 @@ function electronicsignature_civicrm_buildForm($formName, &$form)
             Civi::log()->info('customfield: ' . $fieldNAME);
             return;
         }
-        $esval = _o8esignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
+        $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
         $form->assign('signature_val', $esval);
         Civi::resources()->addScriptFile('com.octopus8.o8esignature', 'dist/main.js');
         $form->assign('signature_pad', 'edit');
