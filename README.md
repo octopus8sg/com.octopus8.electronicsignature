@@ -33,10 +33,14 @@ Learn more about installing CiviCRM extensions in the [CiviCRM Sysadmin Guide](h
 * "e-Signature-PNG :: e-Signature", 
 * "e-Signature-PNG-64 :: e-Signature", 
 
-and
+### AND
 * e-mail (primary)
 * nickname of first/last name
 fields to Profile
+
+## Known Issues
+
+The IDS check should be desabled from Administration->Access Control->WP settings
 
 ## Installation (CLI, Zip)
 
@@ -58,6 +62,3 @@ git clone https://github.com/FIXME/com.octopus8.electronicsignature.git
 cv en electronicsignature
 ```
 
-## Known Issues
-
-This version will not remove e-Signature fields if they are not complitely present
