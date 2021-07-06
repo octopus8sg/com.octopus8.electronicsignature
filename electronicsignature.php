@@ -218,7 +218,7 @@ function electronicsignature_civicrm_buildForm($formName, &$form)
         }
         $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
         $form->assign('signature_val', $esval);
-        Civi::resources()->addScriptFile('com.octopus8.o8esignature', 'dist/main.js');
+        Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'dist/main.js');
         $form->assign('signature_pad', 'edit');
         $form->assign('contactid', $contact_id);
         $form->assign('contact', $contact);
