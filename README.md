@@ -34,13 +34,15 @@ Learn more about installing CiviCRM extensions in the [CiviCRM Sysadmin Guide](h
 * "e-Signature-PNG-64 :: e-Signature", 
 
 ### AND
-* e-mail (primary)
-* nickname of first/last name
+* nickname (from Contact) and first/last name (from Individual)
 fields to Profile
+
+### AND
+* You can change Admin notification message template to the message.tpl to avoid sending e-sign raw data to site administrator
 
 ## Known Issues
 
-The IDS check should be desabled from Administration->Access Control->WP settings
+The *IDS check* should be desabled from Administration->Access Control->WP settings
 
 ## Installation (CLI, Zip)
 
