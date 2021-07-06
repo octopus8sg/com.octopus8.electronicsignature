@@ -176,7 +176,7 @@ function electronicsignature_civicrm_apiWrappers(&$wrappers, $apiRequest)
     // The APIWrapper is conditionally registered so that it runs only when appropriate
     if ($apiRequest['entity'] == 'Attachment' && $apiRequest['action'] == 'create') {
         if ($apiRequest['version'] == '3') {
-            $wrappers[] = new CRM_electronicsignature_API3Wrappers_Attachment();
+//            $wrappers[] = new CRM_electronicsignature_API3Wrappers_Attachment();
         }
     }
 }
@@ -285,9 +285,9 @@ function electronicsignature_civicrm_postProcess($formName, $form)
 {
     if ($formName == 'CRM_Profile_Form_Edit') {
         $values = $form->exportValues();
-        $myVariable = print_r($values, TRUE);
+//        $myVariable = print_r($values, TRUE);
         $contactid = $form->getVar( '_id' );
-        Civi::log()->info($myVariable);
+//        Civi::log()->info($myVariable);
         //Get what the form sended
         //Find new client id by primary email
 //        $result = civicrm_api3('Email', 'get', [
@@ -321,6 +321,23 @@ function electronicsignature_civicrm_postProcess($formName, $form)
         }
         $datajpg = $values[$customfieldjpgbase];
         $datapng = $values[$customfieldpngbase];
+        if (preg_match('/^data:image\/(\w+);base64,/', $datapng, $type)) {
+            $data = substr($datapng, strpos($datapng, ',') + 1);
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                Civi::log('No Error: no pic');
+                $data = $datapng;
+            }
+            $data = str_replace(' ', '+', $data);
+            $data = base64_decode($data);
+            if ($data === false) {
+                Civi::log('Error: no data');
+                $data = $datapng;
+            }
+            $datapng = $data;
+        }
+
         $a = [
             'name' => "signature.png",
             'mime_type' => "image/png",
@@ -328,16 +345,53 @@ function electronicsignature_civicrm_postProcess($formName, $form)
             'field_name' => $customfieldpng,
             'content' => $datapng,
         ];
-        CRM_Core_Error::debug_var('name', $a);
-        $result = civicrm_api3('Attachment', 'create', $a);
+//        CRM_Core_Error::debug_var('name', $a);
+        try {
+            $result = civicrm_api3('Attachment', 'create', $a);
+            $myVariable = print_r($result, TRUE);
+        }
+        catch (CiviCRM_API3_Exception $e) {
+            $myVariable = $e->getMessage();
+        }
+        CRM_Core_Error::debug_var('result png', $myVariable);
+        Civi::log('Base64 Datajpg: ' . $datajpg);
+        CRM_Core_Error::debug_var('Base64 jpg', $datajpg);
+        if (preg_match('/^data:image\/(\w+);base64,/', $datajpg, $type)) {
+            $data = substr($datajpg, strpos($datapng, ',') + 1);
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                Civi::log('No Error: no pic');
+                $data = $datajpg;
+            }
+            $imageInfo = explode(";base64,", $datajpg);
+            $imgExt = str_replace('data:image/', '', $imageInfo[0]);
+            $image = str_replace(' ', '+', $imageInfo[1]);
+            $imageName = "signature".time().".".$imgExt;
+            $data = base64_decode($image);
+            if ($data === false) {
+                Civi::log('Error: no data');
+                $data = $datajpg;
+            }
+            $datajpg = $data;
+        }
+
         $b = [
-            'name' => "signature.jpg",
-            'mime_type' => "image/jpg",
+            'name' => $imageName,
+            'mime_type' => "image/jpeg",
             'entity_id' => $contactid,
             'field_name' => $customfieldjpg,
             'content' => $datajpg,
         ];
-        $result = civicrm_api3('Attachment', 'create', $b);
+        try {
+            $result = civicrm_api3('Attachment', 'create', $b);
+            $myVariable = print_r($result, TRUE);
+        }
+        catch (CiviCRM_API3_Exception $e) {
+            $myVariable = $e->getMessage();
+        }
+        CRM_Core_Error::debug_var('result jpg', $myVariable);
+
     }
 }
 

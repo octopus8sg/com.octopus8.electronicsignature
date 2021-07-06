@@ -13,22 +13,20 @@ class CRM_electronicsignature_API3Wrappers_Attachment implements API_Wrapper {
             $type = strtolower($type[1]); // jpg, png, gif
 
             if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png' ])) {
+                Civi::log('No Error: no pic');
                 return $apiRequest;
             }
             $data = str_replace( ' ', '+', $data );
             $data = base64_decode($data);
             if ($data === false) {
+                Civi::log('Error: no data');
                 return $apiRequest;
             }
-            $apiRequest['params']['content'] = $data;
+//            $apiRequest['params']['content'] = $data;
         }
         return $apiRequest;
     }
     public function toApiOutput($apiRequest, $result) {
-        if (isset($result['id'], $result['values'][$result['id']]['display_name'])) {
-            $result['values'][$result['id']]['display_name_munged'] = 'MUNGE! ' . $result['values'][$result['id']]['display_name'];
-            unset($result['values'][$result['id']]['display_name']);
-        }
         return $result;
     }
 }
