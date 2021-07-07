@@ -553,11 +553,29 @@ function electronicsignature_civicrm_pageRun(&$page)
     //The way to put this only once
     $templatePath = realpath(dirname(__FILE__) . "/templates");
     $tempvars = $page->get_template_vars('arun');
-    /*
-     * $viewprofiletpl = "CRM/Profile/Page/View.tpl";
-    //The way to put this only once
-    $tempname = $page->get_template_vars('tplFile');
-    if ($tempvars !== 'first') {
+    $tempvars = $page->get_template_vars('_debug_tpls');
+    $viewprofiletpl = "CRM_Profile_Page_View";
+    $tempname = $page->getVar('_name');
+    if ($tempvars != 'first') {
+//        return _electronicsignature_profile_page_view($page);
+        if ($tempname == $viewprofiletpl) {
+            return _electronicsignature_profile_page_view($page);
+        }
+//else{
+//            CRM_Core_Region::instance('page-body')->add(array(
+//                'template' => "{$templatePath}/justdebug.tpl",
+//            ));
+//        }
+//
+    }
+    $page->assign('arun', 'first');
+}
+
+function _electronicsignature_profile_page_view($page){
+       $templatePath = realpath(dirname(__FILE__) . "/templates");
+//        CRM_Core_Region::instance('page-body')->add(array(
+//            'template' => "{$templatePath}/justdebug.tpl",
+//        ));
         $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
         $page->assign('contactid', $contact_id);
         $cont = new CRM_Contact_BAO_Contact();
@@ -598,17 +616,12 @@ function electronicsignature_civicrm_pageRun(&$page)
         $fieldNAME = "custom_" . $fieldID;
         $page->assign('customfieldjpgbase', $fieldNAME);
 
-        if ($tempname == $viewprofiletpl) {
-            Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'dist/main.js');
-            CRM_Core_Region::instance('page-body')->add(array(
-                'template' => "{$templatePath}/esignedit.tpl",
-            ));
-            //The way to put this only once
-        }
 
-    }
-    */
-    $page->assign('arun', 'first');
+        CRM_Core_Region::instance('page-body')->add(array(
+            'template' => "{$templatePath}/esignshow.tpl",
+        ));
+    Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'front/show.js');
+
 }
 
 function _electronicsignature_getFieldValue($entityID, $field, $fieldID)

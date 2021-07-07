@@ -1,4 +1,4 @@
-//The script only to show SignaturePad
+//The script only to show SignaturePad on FrontEnd
 
 import SignaturePad from "signature_pad/dist/signature_pad.js";
 
@@ -18,30 +18,36 @@ CRM.$(function ($) {
     let customfield = "";
     let customfieldjpg = "";
     let customfieldpng = "";
-    let contactid = 0;
     let customfieldjpgbase = "";
     let customfieldpngbase = "";
-    let customfieldjpgbaserow = "";
     let customfieldjpgbaseeditrow = "";
 
     $(document).ready(function () {
 
         sigstr = $("#signature").text();
         //signature data
-        contactid = parseInt($("#contactid").text());
         //contact id for saving
         customfield = $("#customfield").text();
         customfieldjpg = $("#customfieldjpg").text();
         customfieldpng = $("#customfieldpng").text();
         customfieldjpgbase = $("#customfieldjpgbase").text();
         customfieldpngbase = $("#customfieldpngbase").text();
-        customfieldjpgbaserow = $("#row-" + customfieldjpgbase);
-        // if(customfieldjpgbaserow.length > 0){
-        //     s.insertAfter(customfieldjpgbaserow);
-        // }
-        customfieldjpgbaserow.hide();
+        customfieldjpgbaseeditrow = $("#row-" + customfieldjpgbase);
+        if(customfieldjpgbaseeditrow.length){
+            s.insertBefore(customfieldjpgbaseeditrow);
+        }
+        customfieldjpgbaseeditrow.hide();
+        $("#row-" + customfieldjpgbase).hide();
+
         $("#row-" + customfieldpngbase).hide();
+        $("#row-" + customfieldpng).hide();
+        $("div.file_displayURL" + customfieldpng + "-section").hide();
+        $("div.file_deleteURL" + customfieldpng + "-section").hide();
+        $("#row-" + customfieldjpg).hide();
+        $("div.file_displayURL" + customfieldjpg + "-section").hide();
+        $("div.file_deleteURL" + customfieldjpg + "-section").hide();
         $("#row-" + customfield).hide();
+        //custom field id for saving
         try{
             let sigdata = JSON.parse(sigstr);
             // drowing from database
@@ -49,12 +55,12 @@ CRM.$(function ($) {
         }catch(e){
             console.log(e.message);
         }
-        // if ('true' === c0.attr('data-disabled')) {
-        //     s1.off();
-        //     s1.innerHTML = "";
-        //     s.hide()
-        //     s.html("");
-        // }
+        if ('true' === c0.attr('data-disabled')) {
+            s1.off();
+            // s1.innerHTML = "";
+            // s.hide()
+            // s.html("");
+        }
 
     });
 
@@ -74,7 +80,7 @@ CRM.$(function ($) {
 
     window.onresize = (c1, c0, s1) => {
         resizeCanvas(c1, c0, s1);
-    }
+    };
     resizeCanvas(c1, c0, s1);
 
     function download(dataURL, filename) {
@@ -128,7 +134,7 @@ CRM.$(function ($) {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, c1.width, c1.height);
         let data = c1.toDataURL('image/jpeg');
-        console.log(data);
+        // console.log(data);
         $("#" + customfieldjpgbase).val(data);
         download(data, "signature.jpg");
 
