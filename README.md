@@ -2,14 +2,14 @@
 
 ![Screenshot](/images/screenshot.png)
 
-(*FIXME: In one or two paragraphs, describe what the extension does and why one would download it. *)
+This CiviCRM Extension has captures an electronic signature as an image and attaches it to a contact. 
 
 The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 ## Requirements
 
 * PHP v7.2+
-* CiviCRM (*FIXME: Version number*)
+* CiviCRM v5.38.0+
 
 ## Installation (Web UI)
 
