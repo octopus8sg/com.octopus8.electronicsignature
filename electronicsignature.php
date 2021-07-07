@@ -178,171 +178,11 @@ function electronicsignature_civicrm_themes(&$themes)
 
 function electronicsignature_civicrm_buildForm($formName, &$form)
 {
-        if ($formName == 'CRM_Profile_Form_Edit') {
-            return _electronicsignature_CRM_Profile_Form_Edit($form);
-        }
-//    //path to add templates
-//    $templatePath = realpath(dirname(__FILE__) . "/templates");
-//
-//    //info about who is filling the form
-//    $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
-//    $form->assign('contactid', $contact_id);
-//    $cont = new CRM_Contact_BAO_Contact();
-//    $cont->id = $contact_id;
-//    if (!$cont->find(TRUE)) {
-//        return civicrm_api3_create_error(ts('Contact id is not valid'));
-//    } else {
-//        $contact = $cont->toArray();
-//    }
-//
-//    // check custom fields.
-//    // if sign data is present,
-//    // but a form is not a profile form
-//    // then a template with script to show
-//    // readonly signature will be added
-//
-//    require_once 'CRM/Core/BAO/CustomField.php';
-//    $group = "e-Signature";
-//    //MAIN DATA FIELD
-//    $esign_data_field =
-//    $esign_jpg_field =
-//    $esign_jpg_data_field =
-//    $esign_png_field =
-//    $esign_png_data_field = false;
-//    $tempvars = $form->get_template_vars('formrun');
-//    $cgvars = $form->get_template_vars('cgCount');
-//    if (!$cgvars) {
-//        return;
-//    }
-//    if ($tempvars !== 'first') {
-//        $form->assign('signature_pad', 'hide');
-//    }
-//
-//    //by default don't show the signature pad
-//
-//    //esign data field
-//    $field = "e-Signature-DATA";
-//    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-//    $fieldNAME = "custom_" . $fieldID;
-//    //if there is esign data field
-//    if ($form->elementExists($fieldNAME)) {
-//        $form->assign('signature_pad', 'show');
-//        $esign_data_field = true;
-//        $form->assign('customfield', $fieldNAME);
-//    }
-//    $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
-//    $form->assign('signature_val', $esval);
-//    $form->assign('contactid', $contact_id);
-//    $form->assign('contact', $contact);
-//
-//    //additional for admin panel
-//    $fieldNAME = "custom_" . $fieldID . "_-1";
-//    if ($form->elementExists($fieldNAME)) {
-//        $form->assign('signature_pad', 'show');
-//        $esign_data_field = true;
-//        $form->assign('customfield', $fieldNAME);
-//    }
-//    $form->assign('esign_data_field', $esign_data_field);
-//
-//    //JPG FIELD
-//    $field = "e-Signature-JPG";
-//    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-//    $fieldNAME = "custom_" . $fieldID;
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_jpg_field = true;
-//        $form->assign('customfieldjpg', $fieldNAME);
-//    }
-//
-//    //additional for admin panel
-//    $fieldNAME = "custom_" . $fieldID . "_-1";
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_jpg_field = true;
-//        $form->assign('customfieldjpg', $fieldNAME);
-//    }
-//
-//    //JPG DATA FIELD
-//    $field = "e-Signature-JPG-64";
-//    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-//    $fieldNAME = "custom_" . $fieldID;
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_jpg_data_field = true;
-//        $form->assign('customfieldjpgbase', $fieldNAME);
-//    }
-//
-//    //additional for admin panel
-//    $fieldNAME = "custom_" . $fieldID . "_-1";
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_jpg_data_field = true;
-//        $form->assign('customfieldjpgbase', $fieldNAME);
-//    }
-//
-//    //PNG FIELD
-//    $field = "e-Signature-PNG";
-//    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-//    $fieldNAME = "custom_" . $fieldID;
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_png_field = true;
-//        $form->assign('customfieldpng', $fieldNAME);
-//    }
-//
-//    //additional for admin panel
-//    $fieldNAME = "custom_" . $fieldID . "_-1";
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_png_field = true;
-//        $form->assign('customfieldpng', $fieldNAME);
-//    }
-//
-//    //PNG DATA FIELD
-//    $field = "e-Signature-PNG-64";
-//    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-//    $fieldNAME = "custom_" . $fieldID;
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_png_data_field = true;
-//        $form->assign('customfieldpngbase', $fieldNAME);
-//    }
-//
-//    //additional for admin panel
-//    $fieldNAME = "custom_" . $fieldID . "_-1";
-//    if ($form->elementExists($fieldNAME)) {
-//        $esign_png_data_field = true;
-//        $form->assign('customfieldpngbase', $fieldNAME);
-//    }
-//
-//
-//
-//    $form->assign('esign_jpg_field', $esign_jpg_field);
-//    $form->assign('esign_jpg_data_field', $esign_jpg_data_field);
-//    $form->assign('esign_png_field', $esign_png_field);
-//    $form->assign('esign_png_data_field', $esign_png_data_field);
-//
-//    Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'dist/main.js');
-//    CRM_Core_Region::instance('page-body')->add(array(
-//        'template' => "{$templatePath}/justdebug.tpl",
-//    ));
-//    $form->assign('formrun', 'first');
-//    $form->assign('esign_data_field', $esign_data_field);
-//    if ($formName == 'CRM_Profile_Form_Edit') {
-//        $form->assign('signature_pad', 'edit');
-//    }
-//    if (!$esign_data_field) {
-//        return;
-//    }
-//    CRM_Core_Region::instance('page-body')->add(array(
-//        'template' => "{$templatePath}/esignshow.tpl",
-//    ));
-//    if (!$esign_png_data_field) {
-//        return;
-//    }
-//    if (!$esign_png_field) {
-//        return;
-//    }
-//    if (!$esign_jpg_data_field) {
-//        return;
-//    }
-//    if (!$esign_jpg_field) {
-//        return;
-//    }
+    $templatePath = realpath(dirname(__FILE__) . "/templates");
 
+    if ($formName == 'CRM_Profile_Form_Edit') {
+        return _electronicsignature_CRM_Profile_Form_Edit($form);
+    }
 
 }
 
@@ -382,7 +222,8 @@ function _electronicsignature_CRM_Profile_Form_Edit($form)
         $esign_data_field = true;
         $form->assign('customfield', $fieldNAME);
     }
-    $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
+//    $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
+    $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_DATA');
     $form->assign('signature_val', $esval);
     $form->assign('esign_data_field', $esign_data_field);
 //    CRM_Core_Region::instance('page-body')->add(array(
@@ -425,12 +266,6 @@ function _electronicsignature_CRM_Profile_Form_Edit($form)
         $form->assign('customfieldpngbase', $fieldNAME);
     }
 
-    //additional for admin panel
-    $fieldNAME = "custom_" . $fieldID . "_-1";
-    if ($form->elementExists($fieldNAME)) {
-        $esign_png_data_field = true;
-        $form->assign('customfieldpngbase', $fieldNAME);
-    }
 
     $form->assign('esign_jpg_field', $esign_jpg_field);
     $form->assign('esign_jpg_data_field', $esign_jpg_data_field);
@@ -445,7 +280,6 @@ function _electronicsignature_CRM_Profile_Form_Edit($form)
     Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'front/edit.js');
 
 }
-
 
 function electronicsignature_civicrm_postProcess($formName, $form)
 {
@@ -552,94 +386,116 @@ function electronicsignature_civicrm_pageRun(&$page)
 
     //The way to put this only once
     $templatePath = realpath(dirname(__FILE__) . "/templates");
-    $tempvars = $page->get_template_vars('arun');
-    $tempvars = $page->get_template_vars('_debug_tpls');
+    $tempvars = $page->get_template_vars('_debug_vals');
     $viewprofiletpl = "CRM_Profile_Page_View";
     $tempname = $page->getVar('_name');
-    if ($tempvars != 'first') {
-//        return _electronicsignature_profile_page_view($page);
+    $page->assign('pagename', $tempname);
+    $page->assign('tempvars', $tempvars);
+
+    if ($tempvars == null) {
         if ($tempname == $viewprofiletpl) {
             return _electronicsignature_profile_page_view($page);
         }
-//else{
-//            CRM_Core_Region::instance('page-body')->add(array(
-//                'template' => "{$templatePath}/justdebug.tpl",
-//            ));
-//        }
-//
     }
-    $page->assign('arun', 'first');
 }
 
-function _electronicsignature_profile_page_view($page){
-       $templatePath = realpath(dirname(__FILE__) . "/templates");
+/**
+ * Implementation of hook_civicrm_alterCustomFieldDisplayValue
+ */
+function electronicsignature_civicrm_alterCustomFieldDisplayValue(&$displayValue, $value, $entityId, $fieldInfo)
+{
+    if ($fieldInfo['name'] == 'e_Signature_DATA') {
+        $displayValue = $fieldInfo['name'];
+    }
+//    if ($fieldInfo['name'] == 'e_Signature_JPG') {
+//        $displayValue = $fieldInfo['name'];
+//    }
+    if ($fieldInfo['name'] == 'e_Signature_JPG_64') {
+        $displayValue = $fieldInfo['name'];
+    }
+//    if ($fieldInfo['name'] == 'e_Signature_PNG') {
+//        $displayValue = $fieldInfo['name'];
+//    }
+    if ($fieldInfo['name'] == 'e_Signature_PNG_64') {
+        $displayValue = $fieldInfo['name'];
+    }
+}
+
+function _electronicsignature_profile_page_view($page)
+{
+    $templatePath = realpath(dirname(__FILE__) . "/templates");
 //        CRM_Core_Region::instance('page-body')->add(array(
 //            'template' => "{$templatePath}/justdebug.tpl",
 //        ));
-        $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
-        $page->assign('contactid', $contact_id);
-        $cont = new CRM_Contact_BAO_Contact();
-        $cont->id = $contact_id;
-        if (!$cont->find(TRUE)) {
-            return civicrm_api3_create_error(ts('Contact id is not valid'));
-        } else {
-            $contact = $cont->toArray();
-        }
-        require_once 'CRM/Core/BAO/CustomField.php';
-        $group = "e-Signature";
-        //MAIN DATA FIELD
-        $field = "e-Signature-DATA";
-        $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-        $fieldNAME = "custom_" . $fieldID;
-        $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
-        $page->assign('signature_val', $esval);
-        $page->assign('signature_pad', 'show');
-        $page->assign('customfield', $fieldNAME);
-        $page->assign('contactid', $contact_id);
-        $page->assign('contact', $contact);
-        //JPG DATA FIELD
-        $field = "e-Signature-JPG";
-        $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-        $fieldNAME = "custom_" . $fieldID;
-        $page->assign('customfieldjpg', $fieldNAME);
-        //PNG DATA FIELD
-        $field = "e-Signature-PNG";
-        $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-        $fieldNAME = "custom_" . $fieldID;
-        $page->assign('customfieldpng', $fieldNAME);
-        $field = "e-Signature-PNG-64";
-        $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-        $fieldNAME = "custom_" . $fieldID;
-        $page->assign('customfieldpngbase', $fieldNAME);
-        $field = "e-Signature-JPG-64";
-        $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
-        $fieldNAME = "custom_" . $fieldID;
-        $page->assign('customfieldjpgbase', $fieldNAME);
+    $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
+    $page->assign('contactid', $contact_id);
+    $cont = new CRM_Contact_BAO_Contact();
+    $cont->id = $contact_id;
+    if (!$cont->find(TRUE)) {
+        return civicrm_api3_create_error(ts('Contact id is not valid'));
+    } else {
+        $contact = $cont->toArray();
+    }
+    require_once 'CRM/Core/BAO/CustomField.php';
+    $group = "e-Signature";
+    //MAIN DATA FIELD
+    $field = "e-Signature-DATA";
+    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
+    $fieldNAME = "custom_" . $fieldID;
+//    $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
+    $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_DATA');
+    $page->assign('signature_val', $esval);
+    $page->assign('signature_pad', 'show');
+    $page->assign('customfield', $fieldNAME);
+    $page->assign('contactid', $contact_id);
+    $page->assign('contact', $contact);
+    //JPG DATA FIELD
+    $field = "e-Signature-JPG";
+    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
+    $fieldNAME = "custom_" . $fieldID;
+    $page->assign('customfieldjpg', $fieldNAME);
+    //PNG DATA FIELD
+    $field = "e-Signature-PNG";
+    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
+    $fieldNAME = "custom_" . $fieldID;
+    $page->assign('customfieldpng', $fieldNAME);
+    $field = "e-Signature-PNG-64";
+    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
+    $fieldNAME = "custom_" . $fieldID;
+    $page->assign('customfieldpngbase', $fieldNAME);
+    $field = "e-Signature-JPG-64";
+    $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
+    $fieldNAME = "custom_" . $fieldID;
+    $page->assign('customfieldjpgbase', $fieldNAME);
 
 
-        CRM_Core_Region::instance('page-body')->add(array(
-            'template' => "{$templatePath}/esignshow.tpl",
-        ));
+    CRM_Core_Region::instance('page-body')->add(array(
+        'template' => "{$templatePath}/esignshow.tpl",
+    ));
     Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'front/show.js');
 
 }
 
-function _electronicsignature_getFieldValue($entityID, $field, $fieldID)
+
+function _electronicsignature_get_raw_value($entityID, $fieldname)
 {
-    if (strpos($field, 'custom_') === 0) {
-        $custom_field_id = str_replace("custom_", "", $field);
-        try {
-            $params['entityID'] = $entityID;
-            $params[$field] = 1;
-            $values = CRM_Core_BAO_CustomValueTable::getValues($params);
-            if (!empty($values[$field])) {
-                $val = CRM_Core_BAO_CustomField::displayValue($values[$field], $fieldID, $entityID ?? NULL);
-                return $val;
-            } elseif (!empty($values['error_message'])) {
-                return $values['error_message'];
+    $searcharray = [
+        'sequential' => 1,
+        'name' => $fieldname,
+        'api.CustomValue.getdisplayvalue' => ['entity_id' => $entityID],
+    ];
+
+    $myVariable = print_r($searcharray, TRUE);
+    CRM_Core_Error::debug_var('search api', $myVariable);    $result = civicrm_api3('CustomField', 'get', $searcharray);
+    $myVariable = print_r($result, TRUE);
+    CRM_Core_Error::debug_var('result api', $myVariable);
+    if (sizeof($result['values']) > 0) {
+        if (isset($result['values'][0]['api.CustomValue.getdisplayvalue'])) {
+            if (sizeof($result['values'][0]['api.CustomValue.getdisplayvalue']['values']) > 0) {
+                if (isset($result['values'][0]['api.CustomValue.getdisplayvalue']['values'][0]["raw"])) {
+                    return $result['values'][0]['api.CustomValue.getdisplayvalue']['values'][0]["raw"];
+                }
             }
-        } catch (Exception $e) {
-            //do nothing
         }
     }
     return null;
