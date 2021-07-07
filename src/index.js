@@ -136,7 +136,10 @@ CRM.$(function ($) {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, c1.width, c1.height);
         let data = c1.toDataURL('image/jpeg');
+        // console.log(data);
+        $("#" + customfieldjpgbase).val(data);
         download(data, "signature.jpg");
+
     });
 
     $('#save-svg').click(function (event) {
@@ -170,7 +173,7 @@ CRM.$(function ($) {
         ctx.fillRect(0, 0, c1.width, c1.height);
         let data2 = c1.toDataURL('image/jpeg');
         // let data2 = s1.toDataURL('image/jpeg');
-        // console.log(data2);
+        console.log(data2);
         $("#" + customfieldjpgbase).val(data2);
         // $("#tcustomfieldjpg").hide();
     });
