@@ -186,6 +186,7 @@ function electronicsignature_civicrm_buildForm($formName, &$form)
 
 }
 
+
 function _electronicsignature_CRM_Profile_Form_Edit($form)
 {
     //path to add templates
@@ -396,6 +397,34 @@ function electronicsignature_civicrm_pageRun(&$page)
         if ($tempname == $viewprofiletpl) {
             return _electronicsignature_profile_page_view($page);
         }
+    } else {
+        CRM_Core_Region::instance('page-body')->add(array(
+            'template' => "{$templatePath}/justdebug.tpl",
+        ));
+    }
+
+}
+
+function electronicsignature_civicrm_tabset($tabsetName, &$tabs, $context)
+{
+    if ($tabsetName == 'civicrm/contact/view') {
+        $templatePath = realpath(dirname(__FILE__) . "/templates");
+        $i = 0;
+        foreach ($tabs as $tab){
+            if($tab['title'] == 'e-Signature'){
+                $contact_id = $context['contact_id'];
+                $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_PNG_64');
+                Civi::log($esval);
+                $tabs[$i]['signatureval'] = $esval;
+                $tabs[$i]['template'] = "{$templatePath}/esignadminshow.tpl";
+                Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'back/show.js');
+            }
+            $i++;
+        }
+//        CRM_Core_Region::instance('page-body')->add(array(
+//            'template' => "{$templatePath}/justdebug.tpl",
+//        ));
+
     }
 }
 
@@ -404,6 +433,7 @@ function electronicsignature_civicrm_pageRun(&$page)
  */
 function electronicsignature_civicrm_alterCustomFieldDisplayValue(&$displayValue, $value, $entityId, $fieldInfo)
 {
+
     if ($fieldInfo['name'] == 'e_Signature_DATA') {
         $displayValue = $fieldInfo['name'];
     }
@@ -486,7 +516,8 @@ function _electronicsignature_get_raw_value($entityID, $fieldname)
     ];
 
     $myVariable = print_r($searcharray, TRUE);
-    CRM_Core_Error::debug_var('search api', $myVariable);    $result = civicrm_api3('CustomField', 'get', $searcharray);
+    CRM_Core_Error::debug_var('search api', $myVariable);
+    $result = civicrm_api3('CustomField', 'get', $searcharray);
     $myVariable = print_r($result, TRUE);
     CRM_Core_Error::debug_var('result api', $myVariable);
     if (sizeof($result['values']) > 0) {
