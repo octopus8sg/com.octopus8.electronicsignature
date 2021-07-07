@@ -1,16 +1,10 @@
+{*template to edit Signature pad*}
+
 <div id="signaturepad">
     <h4>Signature Pad</h4>
-    {if $signature_pad != 'edit'}
-        <div class="wrapper-1">
-            <canvas id="signature-pad-1" class="signature-pad" data-disabled="true"></canvas>
-        </div>
-    {else}
         <div class="wrapper-1">
             <canvas id="signature-pad-1" class="signature-pad"></canvas>
         </div>
-    {/if}
-    {if $signature_pad == 'edit'}
-
         <div class="crm-submit-buttons">
             <button id="clear" class="crm-button">Clear</button>
             <button id="save-png" class="crm-button">Download PNG</button>
@@ -22,7 +16,6 @@
             <br />
             {$form.tcustomfieldjpg.html}
         </div>
-    {/if}
     <div>
         <div id="signature" style="display: none;">{$signature_val}</div>
         <div id="contactid" style="display: none;">{$contactid}</div>

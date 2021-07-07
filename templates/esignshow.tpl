@@ -1,4 +1,5 @@
-<h1>SHOW ME!</h1>
+{*template to show Signature pad*}
+
 <div id="signaturepad">
     <h4>Signature Pad</h4>
     <div class="wrapper-1">
