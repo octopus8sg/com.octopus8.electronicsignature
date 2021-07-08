@@ -441,18 +441,18 @@ function electronicsignature_civicrm_alterCustomFieldDisplayValue(&$displayValue
     if ($fieldInfo['name'] == 'e_Signature_DATA') {
         $displayValue = $fieldInfo['name'];
     }
-    if ($fieldInfo['name'] == 'e_Signature_JPG') {
-        $displayValue = $fieldInfo['name'];
-    }
-    if ($fieldInfo['name'] == 'e_Signature_JPG_64') {
-        $displayValue = $fieldInfo['name'];
-    }
-    if ($fieldInfo['name'] == 'e_Signature_PNG') {
-        $displayValue = $fieldInfo['name'];
-    }
-    if ($fieldInfo['name'] == 'e_Signature_PNG_64') {
-        $displayValue = $fieldInfo['name'];
-    }
+//    if ($fieldInfo['name'] == 'e_Signature_JPG') {
+//        $displayValue = $fieldInfo['name'];
+//    }
+//    if ($fieldInfo['name'] == 'e_Signature_JPG_64') {
+//        $displayValue = $fieldInfo['name'];
+//    }
+//    if ($fieldInfo['name'] == 'e_Signature_PNG') {
+//        $displayValue = $fieldInfo['name'];
+//    }
+//    if ($fieldInfo['name'] == 'e_Signature_PNG_64') {
+//        $displayValue = $fieldInfo['name'];
+//    }
 }
 
 function _electronicsignature_profile_page_view($page)
