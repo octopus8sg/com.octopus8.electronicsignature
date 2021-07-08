@@ -193,6 +193,7 @@ function _electronicsignature_CRM_Profile_Form_Edit($form)
     $templatePath = realpath(dirname(__FILE__) . "/templates");
     //info about who is filling the form
     $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
+
     $form->assign('contactid', $contact_id);
 
 
@@ -224,7 +225,10 @@ function _electronicsignature_CRM_Profile_Form_Edit($form)
         $form->assign('customfield', $fieldNAME);
     }
 //    $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
-    $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_DATA');
+    $esval = null;
+    if ($contact_id) {
+        $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_DATA');
+    }
     $form->assign('signature_val', $esval);
     $form->assign('esign_data_field', $esign_data_field);
 //    CRM_Core_Region::instance('page-body')->add(array(
@@ -410,8 +414,8 @@ function electronicsignature_civicrm_tabset($tabsetName, &$tabs, $context)
     if ($tabsetName == 'civicrm/contact/view') {
         $templatePath = realpath(dirname(__FILE__) . "/templates");
         $i = 0;
-        foreach ($tabs as $tab){
-            if($tab['title'] == 'e-Signature'){
+        foreach ($tabs as $tab) {
+            if ($tab['title'] == 'e-Signature') {
                 $contact_id = $context['contact_id'];
                 $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_PNG_64');
                 Civi::log($esval);
@@ -457,7 +461,8 @@ function _electronicsignature_profile_page_view($page)
 //        CRM_Core_Region::instance('page-body')->add(array(
 //            'template' => "{$templatePath}/justdebug.tpl",
 //        ));
-    $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
+//    $contact_id = CRM_Core_Session::singleton()->getLoggedInContactID();
+    $contact_id = $page->getVar('_id');
     $page->assign('contactid', $contact_id);
     $cont = new CRM_Contact_BAO_Contact();
     $cont->id = $contact_id;
@@ -473,7 +478,10 @@ function _electronicsignature_profile_page_view($page)
     $fieldID = CRM_Core_BAO_CustomField::getCustomFieldID($field, $group);
     $fieldNAME = "custom_" . $fieldID;
 //    $esval = _electronicsignature_getFieldValue($contact_id, $fieldNAME, $fieldID);
-    $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_DATA');
+    $esval = null;
+    if ($contact_id) {
+        $esval = _electronicsignature_get_raw_value($contact_id, 'e_Signature_DATA');
+    }
     $page->assign('signature_val', $esval);
     $page->assign('signature_pad', 'show');
     $page->assign('customfield', $fieldNAME);
@@ -502,6 +510,9 @@ function _electronicsignature_profile_page_view($page)
     CRM_Core_Region::instance('page-body')->add(array(
         'template' => "{$templatePath}/esignshow.tpl",
     ));
+    CRM_Core_Region::instance('page-body')->add(array(
+        'template' => "{$templatePath}/justdebug.tpl",
+    ));
     Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'front/show.js');
 
 }
@@ -517,19 +528,29 @@ function _electronicsignature_get_raw_value($entityID, $fieldname)
 
     $myVariable = print_r($searcharray, TRUE);
     CRM_Core_Error::debug_var('search api', $myVariable);
-    $result = civicrm_api3('CustomField', 'get', $searcharray);
-    $myVariable = print_r($result, TRUE);
-    CRM_Core_Error::debug_var('result api', $myVariable);
-    if (sizeof($result['values']) > 0) {
-        if (isset($result['values'][0]['api.CustomValue.getdisplayvalue'])) {
-            if (sizeof($result['values'][0]['api.CustomValue.getdisplayvalue']['values']) > 0) {
-                if (isset($result['values'][0]['api.CustomValue.getdisplayvalue']['values'][0]["raw"])) {
-                    return $result['values'][0]['api.CustomValue.getdisplayvalue']['values'][0]["raw"];
+    try {
+        $result = civicrm_api3('CustomField', 'get', $searcharray);
+        $myVariable = print_r($result, TRUE);
+        CRM_Core_Error::debug_var('result api', $myVariable);
+
+        if (isset($result['values'])) {
+            if (sizeof($result['values']) > 0) {
+                if (isset($result['values'][0]['api.CustomValue.getdisplayvalue'])) {
+                    if (isset($result['values'][0]['api.CustomValue.getdisplayvalue']['values'])) {
+                        if (sizeof($result['values'][0]['api.CustomValue.getdisplayvalue']['values']) > 0) {
+                            if (isset($result['values'][0]['api.CustomValue.getdisplayvalue']['values'][0]["raw"])) {
+                                return $result['values'][0]['api.CustomValue.getdisplayvalue']['values'][0]["raw"];
+                            }
+                        }
+                    }
                 }
             }
         }
+    } catch (Exception $error) {
+        return null;
     }
     return null;
+
 }
 
 
