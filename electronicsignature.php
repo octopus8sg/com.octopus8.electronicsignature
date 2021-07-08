@@ -510,9 +510,9 @@ function _electronicsignature_profile_page_view($page)
     CRM_Core_Region::instance('page-body')->add(array(
         'template' => "{$templatePath}/esignshow.tpl",
     ));
-    CRM_Core_Region::instance('page-body')->add(array(
-        'template' => "{$templatePath}/justdebug.tpl",
-    ));
+//    CRM_Core_Region::instance('page-body')->add(array(
+//        'template' => "{$templatePath}/justdebug.tpl",
+//    ));
     Civi::resources()->addScriptFile('com.octopus8.electronicsignature', 'front/show.js');
 
 }
